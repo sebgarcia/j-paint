@@ -11,6 +11,7 @@ import view.gui.PaintCanvas;
 import view.interfaces.IGuiWindow;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
+import view.gui.MyMouseListener;
 
 import java.awt.*;
 import java.util.Collection;
@@ -19,6 +20,7 @@ import java.util.EnumMap;
 public class Main {
     public static void main(String[] args){
         PaintCanvasBase paintCanvas = new PaintCanvas();
+        MyMouseListener myMouseListener = new MyMouseListener();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
@@ -33,6 +35,7 @@ public class Main {
             e.printStackTrace();
         }
 
+        paintCanvas.addMouseListener(myMouseListener);
         // Filled in rectangle
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setColor(Color.GREEN);
@@ -48,5 +51,7 @@ public class Main {
         graphics2d.setStroke(stroke);
         graphics2d.setColor(Color.BLACK);
         graphics2d.drawRect(7, 8, 210, 410);
+
+
     }
 }

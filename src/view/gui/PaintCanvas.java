@@ -1,9 +1,11 @@
 package view.gui;
 
 import view.interfaces.PaintCanvasBase;
-
+import view.gui.MyMouseListener;
 import javax.swing.JComponent;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class PaintCanvas extends PaintCanvasBase {
 
@@ -11,3 +13,4 @@ public class PaintCanvas extends PaintCanvasBase {
         return (Graphics2D)getGraphics();
     }
 }
+
