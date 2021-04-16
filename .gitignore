@@ -1,6 +1,8 @@
 #ignore class files
 *.class
+*.iml
 
 #ignore output directory
 src/out
 
+j-paint/
