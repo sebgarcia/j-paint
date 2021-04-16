@@ -18,10 +18,6 @@ public class MyMouseListener extends MouseAdapter {
         System.out.print("Mouse Pressed");
     }
 
-    public void mouseEntered (MouseEvent e){
-    }
 
-    public void mouseExited (MouseEvent e){
-    }
 
 }
