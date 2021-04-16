@@ -5,4 +5,7 @@
 #ignore output directory
 src/out
 
+#ignore auto generated directory by IntelliJ
 j-paint/
+
+src/.idea
