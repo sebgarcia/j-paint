@@ -3,13 +3,14 @@ package view.gui;
 import java.util.Stack;
 import model.interfaces.IUndoable;
 
-class CommandHistory {
+public class CommandHistory {
 	private static final Stack<IUndoable> undoStack = new Stack<IUndoable>();
 	private static final Stack<IUndoable> redoStack = new Stack<IUndoable>();
 
 	public static void add(IUndoable cmd) {
 		undoStack.push(cmd);
 		redoStack.clear();
+		//System.out.println(undoStack);
 	}
 	
 	public static boolean undo() {

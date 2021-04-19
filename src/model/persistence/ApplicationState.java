@@ -1,5 +1,6 @@
 package model.persistence;
 
+import view.gui.CommandHistory;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
@@ -48,6 +49,11 @@ public class ApplicationState implements IApplicationState {
     @Override
     public void setActiveStartAndEndPointMode() {
         activeMouseMode = uiModule.getDialogResponse(dialogProvider.getChooseStartAndEndPointModeDialog());
+    }
+
+    @Override
+    public void setUndo() {
+        CommandHistory.undo();
     }
 
     @Override

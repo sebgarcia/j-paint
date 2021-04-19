@@ -16,6 +16,8 @@ public interface IApplicationState {
 
     void setActiveStartAndEndPointMode();
 
+    void setUndo();
+
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();

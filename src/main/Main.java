@@ -20,12 +20,12 @@ import java.util.EnumMap;
 public class Main {
     public static void main(String[] args){
         PaintCanvasBase paintCanvas = new PaintCanvas();
-        MyMouseListener myMouseListener = new MyMouseListener(paintCanvas);
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
+        MyMouseListener myMouseListener = new MyMouseListener(paintCanvas,appState);
 
         // For example purposes only; remove all lines below from your final project.
 
