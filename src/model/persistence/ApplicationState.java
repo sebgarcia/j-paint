@@ -57,6 +57,11 @@ public class ApplicationState implements IApplicationState {
     }
 
     @Override
+    public void setRedo(){
+        CommandHistory.redo();
+    }
+
+    @Override
     public ShapeType getActiveShapeType() {
         return activeShapeType;
     }

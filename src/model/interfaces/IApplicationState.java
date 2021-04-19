@@ -18,6 +18,8 @@ public interface IApplicationState {
 
     void setUndo();
 
+    void setRedo();
+
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();

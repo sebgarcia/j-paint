@@ -28,7 +28,6 @@ public class MyMouseListener extends MouseAdapter {
     }
 
     public void mouseReleased(MouseEvent e){
-        System.out.print("Mouse Released");
         endPoint = new MyPoint(e.getX(),e.getY());
         command = new DrawCommand(paintCanvas, startPoint,endPoint);
 
