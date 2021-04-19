@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import view.gui.MyPoint;
 
+import view.gui.CommandHistory;
+
+
 public class MyMouseListener extends MouseAdapter {
 
     PaintCanvasBase paintCanvas;
