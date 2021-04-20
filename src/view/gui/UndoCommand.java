@@ -23,4 +23,8 @@ public class UndoCommand implements ICommand, IUndoable {
 
     }
 
+    public void rerun(){
+
+    }
+
 }

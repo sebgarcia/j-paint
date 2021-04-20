@@ -29,11 +29,11 @@ public class Main {
 
         // For example purposes only; remove all lines below from your final project.
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         paintCanvas.addMouseListener(myMouseListener);
         // Filled in rectangle
