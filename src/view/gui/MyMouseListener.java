@@ -11,7 +11,6 @@ import view.gui.MyPoint;
 import model.interfaces.ICommand;
 import view.gui.CommandHistory;
 
-
 public class MyMouseListener extends MouseAdapter {
 
     PaintCanvasBase paintCanvas;
@@ -29,16 +28,12 @@ public class MyMouseListener extends MouseAdapter {
 
     public void mouseReleased(MouseEvent e){
         endPoint = new MyPoint(e.getX(),e.getY());
-        command = new DrawCommand(paintCanvas, startPoint,endPoint);
-
+        command = new Rectangle(paintCanvas, startPoint,endPoint);
         try {
             command.run();
         } catch(IOException ex){
             System.out.print("Something went wrong");
         }
-
-
-
 
 
         //Graphics2D graphics2d = paintCanvas.getGraphics2D();
@@ -49,7 +44,6 @@ public class MyMouseListener extends MouseAdapter {
     }
 
     public void mousePressed(MouseEvent e){
-        //System.out.print("Mouse Pressed");
         startPoint = new MyPoint(e.getX(),e.getY());
     }
 
