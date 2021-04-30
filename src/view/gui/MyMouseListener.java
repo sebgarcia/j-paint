@@ -1,15 +1,11 @@
 package view.gui;
-import java.awt.*;
 import view.interfaces.PaintCanvasBase;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import model.persistence.ApplicationState;
 
-import view.gui.MyPoint;
 import model.interfaces.ICommand;
-import view.gui.CommandHistory;
 
 public class MyMouseListener extends MouseAdapter {
 
@@ -28,7 +24,7 @@ public class MyMouseListener extends MouseAdapter {
 
     public void mouseReleased(MouseEvent e){
         endPoint = new MyPoint(e.getX(),e.getY());
-        command = new Rectangle(paintCanvas, startPoint,endPoint);
+        command = new Shape(paintCanvas, startPoint,endPoint, appState);
         try {
             command.run();
         } catch(IOException ex){

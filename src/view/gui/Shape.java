@@ -1,36 +1,55 @@
 package view.gui;
 
+import model.ShapeType;
 import model.interfaces.ICommand;
+import model.interfaces.IDrawStrategy;
 import model.interfaces.IShape;
 import model.interfaces.IUndoable;
+import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
 import java.util.Stack;
 import java.awt.*;
 
-public class Rectangle implements ICommand, IUndoable, IShape {
+public class Shape implements ICommand, IUndoable, IShape {
 
     PaintCanvasBase paintCanvas;
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
     Stack<IShape> tempShapesList;
+    IDrawStrategy drawStrategy;
+    ApplicationState appState;
+    ShapeType shapeType;
 
-    public Rectangle(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint){
+    public Shape(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.graphics2d = paintCanvas.getGraphics2D();
+        this.appState = appState;
     }
 
     public void run(){
-        this.draw();
+        shapeType = appState.getActiveShapeType();
+        switch(shapeType){
+            case RECTANGLE:
+                drawStrategy = new DrawRectangleStrategy(paintCanvas,startPoint,endPoint, appState);
+                break;
+            case ELLIPSE:
+                drawStrategy = new DrawEllipseStrategy(paintCanvas,startPoint,endPoint, appState);
+        }
+
+        System.out.println(shapeType);
+        //drawStrategy = new DrawRectangleStrategy(paintCanvas,startPoint,endPoint, appState);
+        drawStrategy.draw();
         CommandHistory.add(this);
         ShapesList.add(this);
     }
 
     public void draw(){
-        graphics2d.setColor(Color.BLUE);
-        graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
+        drawStrategy.draw();
+        //graphics2d.setColor(Color.BLUE);
+        //graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
     }
 
     public void undo(){
@@ -47,7 +66,7 @@ public class Rectangle implements ICommand, IUndoable, IShape {
     }
 
     public void redo(){
-        this.draw();
+        drawStrategy.draw();
         ShapesList.add(this);
     }
 
