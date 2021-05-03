@@ -14,6 +14,8 @@ public class DrawRectangleStrategy implements IDrawStrategy {
     Graphics2D graphics2d;
     ApplicationState appState;
 
+
+
     DrawRectangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;

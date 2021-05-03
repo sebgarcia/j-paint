@@ -37,6 +37,8 @@ public class Shape implements ICommand, IUndoable, IShape {
                 break;
             case ELLIPSE:
                 drawStrategy = new DrawEllipseStrategy(paintCanvas,startPoint,endPoint, appState);
+            case TRIANGLE:
+                drawStrategy  = new DrawTriangleStrategy(paintCanvas, startPoint, endPoint, appState);
         }
 
         System.out.println(shapeType);
