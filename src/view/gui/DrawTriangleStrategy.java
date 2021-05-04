@@ -32,21 +32,19 @@ public class DrawTriangleStrategy implements IDrawStrategy {
         this.yValues[0] = startPoint.getY();
         this.yValues[1] = endPoint.getY();
         this.yValues[2] = endPoint.getY();
-        primary_color = Color.BLUE;
-        secondary_color = Color.GREEN;
+        primary_color = appState.getActivePrimaryColor().getColor();
+        secondary_color = appState.getActiveSecondaryColor().getColor();
         current_shading_type = appState.getActiveShapeShadingType();
         polygon = new Polygon(xValues,yValues,3);
     }
 
     public void draw(){
         graphics2d = paintCanvas.getGraphics2D();
-        ShapeColor current_color = appState.getActivePrimaryColor();
         graphics2d.setColor(primary_color);
         graphics2d.setStroke(new BasicStroke(5));
         switch (current_shading_type){
             case OUTLINE:
                 graphics2d.drawPolygon(polygon);
-                System.out.println("OUTLINE");
                 break;
             case FILLED_IN:
                 graphics2d.fillPolygon(xValues,yValues,3);
@@ -57,6 +55,5 @@ public class DrawTriangleStrategy implements IDrawStrategy {
                 graphics2d.drawPolygon(xValues,yValues,3);
                 break;
         }
-        //graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
     }
 }

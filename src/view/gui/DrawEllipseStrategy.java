@@ -23,13 +23,12 @@ public class DrawEllipseStrategy implements IDrawStrategy {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.appState = appState;
-        primary_color = Color.BLUE;
-        secondary_color = Color.GREEN;
+        primary_color = appState.getActivePrimaryColor().getColor();
+        secondary_color = appState.getActiveSecondaryColor().getColor();
         current_shading_type = appState.getActiveShapeShadingType();
     }
     public void draw(){
         graphics2d = paintCanvas.getGraphics2D();
-        ShapeColor current_color = appState.getActivePrimaryColor();
         graphics2d.setColor(primary_color);
         graphics2d.setStroke(new BasicStroke(5));
         switch(current_shading_type){
