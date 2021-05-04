@@ -20,6 +20,8 @@ public class Shape implements ICommand, IUndoable, IShape {
     IDrawStrategy drawStrategy;
     ApplicationState appState;
     ShapeType shapeType;
+    Color primary_color;
+    Color secondary_color;
 
     public Shape(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;
@@ -27,6 +29,7 @@ public class Shape implements ICommand, IUndoable, IShape {
         this.endPoint = endPoint;
         this.graphics2d = paintCanvas.getGraphics2D();
         this.appState = appState;
+        appState.getActivePrimaryColor();
     }
 
     public void run(){
@@ -37,12 +40,13 @@ public class Shape implements ICommand, IUndoable, IShape {
                 break;
             case ELLIPSE:
                 drawStrategy = new DrawEllipseStrategy(paintCanvas,startPoint,endPoint, appState);
+                break;
             case TRIANGLE:
                 drawStrategy  = new DrawTriangleStrategy(paintCanvas, startPoint, endPoint, appState);
+                break;
         }
 
-        System.out.println(shapeType);
-        //drawStrategy = new DrawRectangleStrategy(paintCanvas,startPoint,endPoint, appState);
+        //System.out.println(shapeType);
         drawStrategy.draw();
         CommandHistory.add(this);
         ShapesList.add(this);
@@ -60,6 +64,8 @@ public class Shape implements ICommand, IUndoable, IShape {
         ShapesList.remove();
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
+        graphics2d.setStroke(new BasicStroke(15));
+        graphics2d.drawRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
         tempShapesList = ShapesList.getShapesList();
         for(int i = 0; i < (tempShapesList.size()); i+=1){
             IShape c = tempShapesList.get(i);
