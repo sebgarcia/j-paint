@@ -4,11 +4,12 @@ package view.gui;
 import java.util.Stack;
 
 import model.interfaces.IShape;
+import view.gui.Shape;
 
 public class ShapesList {
-    private static final Stack<IShape> shapesList = new Stack<IShape>();
+    private static final Stack<Shape> shapesList = new Stack<Shape>();
 
-    public static void add(IShape shape) {
+    public static void add(Shape shape) {
         shapesList.push(shape);
     }
 
@@ -16,7 +17,7 @@ public class ShapesList {
         shapesList.pop();
     }
 
-    public static Stack<IShape> getShapesList(){
+    public static Stack<Shape> getShapesList(){
         return shapesList;
     }
 

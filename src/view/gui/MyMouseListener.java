@@ -1,4 +1,5 @@
 package view.gui;
+import model.MouseMode;
 import view.interfaces.PaintCanvasBase;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,6 +15,7 @@ public class MyMouseListener extends MouseAdapter {
     MyPoint endPoint;
     ICommand command;
     ApplicationState appState;
+    MouseMode mouseMode;
 
 
     public MyMouseListener(PaintCanvasBase paintCanvas, ApplicationState appState){
@@ -24,11 +26,26 @@ public class MyMouseListener extends MouseAdapter {
 
     public void mouseReleased(MouseEvent e){
         endPoint = new MyPoint(e.getX(),e.getY());
-        command = new Shape(paintCanvas, startPoint,endPoint, appState);
-        try {
-            command.run();
-        } catch(IOException ex){
-            System.out.print("Something went wrong");
+        mouseMode = appState.getActiveMouseMode();
+        switch(mouseMode){
+            case DRAW:
+                command = new Shape(paintCanvas, startPoint,endPoint, appState);
+                try {
+                    command.run();
+                } catch(IOException ex){
+                    System.out.print("Something went wrong with your Draw mode");
+                }
+                break;
+            case MOVE:
+                break;
+            case SELECT:
+                command = new SelectCommand(paintCanvas, startPoint, endPoint, appState);
+                try{
+                    command.run();
+                }catch(IOException ex){
+                    System.out.println("Something went wrong with your Select command");
+                }
+                break;
         }
 
 
