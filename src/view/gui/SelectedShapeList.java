@@ -15,7 +15,6 @@ public class SelectedShapeList {
 
     public static void clear(){
         selectedShapeList.clear();
-        System.out.println("running Select Command clear");
     }
 
     public static List<Shape> getSelectedShapeList(){
