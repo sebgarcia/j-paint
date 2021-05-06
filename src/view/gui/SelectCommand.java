@@ -8,6 +8,8 @@ import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
 
+import java.sql.Array;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.awt.*;
@@ -20,9 +22,8 @@ public class SelectCommand implements ICommand {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    Stack<Shape> tempShapesList;
+    List<Shape> tempShapesList = new ArrayList<Shape>();
     ApplicationState appState;
-    //Stack<IShape> selectedShapes;
 
     public SelectCommand(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;
@@ -35,13 +36,12 @@ public class SelectCommand implements ICommand {
     public void run() throws IOException {
         SelectedShapeList.clear();
         tempShapesList = ShapesList.getShapesList();
-        for(int i = 0; i < (tempShapesList.size()); i+=1){
-            Shape s = tempShapesList.get(i);
-            if (collision_detector(s, startPoint,endPoint)){
+        for(Shape s : tempShapesList){
+            if (collision_detector(s,startPoint,endPoint)){
                 SelectedShapeList.add(s);
             }
         }
-        System.out.println(SelectedShapeList.getSelectedShapeList());
+        //System.out.println(SelectedShapeList.getSelectedShapeList());
     }
 
     public boolean collision_detector(Shape shape, MyPoint startPoint, MyPoint endPoint){

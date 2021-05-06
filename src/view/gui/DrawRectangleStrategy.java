@@ -21,14 +21,14 @@ public class DrawRectangleStrategy implements IDrawStrategy {
 
 
 
-    DrawRectangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
+    DrawRectangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.appState = appState;
-        current_shading_type = appState.getActiveShapeShadingType();
-        primary_color = appState.getActivePrimaryColor().getColor();
-        secondary_color = appState.getActiveSecondaryColor().getColor();
+        this.current_shading_type = current_shading_type;
+        this.primary_color = primary_color;
+        this.secondary_color = secondary_color;
     }
 
     public void draw(){
@@ -49,4 +49,6 @@ public class DrawRectangleStrategy implements IDrawStrategy {
             break;
         }
     }
+
+
 }

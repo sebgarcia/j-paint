@@ -1,6 +1,10 @@
 package view.gui;
 import model.MouseMode;
+import model.ShapeShadingType;
+import model.ShapeType;
 import view.interfaces.PaintCanvasBase;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -16,10 +20,13 @@ public class MyMouseListener extends MouseAdapter {
     ICommand command;
     ApplicationState appState;
     MouseMode mouseMode;
+    Color primary_color;
+    Color secondary_color;
+    ShapeShadingType current_shading_type;
+    ShapeType shapeType;
 
 
     public MyMouseListener(PaintCanvasBase paintCanvas, ApplicationState appState){
-
         this.paintCanvas = paintCanvas;
         this.appState = appState;
     }
@@ -27,33 +34,27 @@ public class MyMouseListener extends MouseAdapter {
     public void mouseReleased(MouseEvent e){
         endPoint = new MyPoint(e.getX(),e.getY());
         mouseMode = appState.getActiveMouseMode();
+        current_shading_type = appState.getActiveShapeShadingType();
+        primary_color = appState.getActivePrimaryColor().getColor();
+        secondary_color = appState.getActiveSecondaryColor().getColor();
+        shapeType = appState.getActiveShapeType();
         switch(mouseMode){
             case DRAW:
-                command = new Shape(paintCanvas, startPoint,endPoint, appState);
-                try {
-                    command.run();
-                } catch(IOException ex){
-                    System.out.print("Something went wrong with your Draw mode");
-                }
+                command = new Shape(paintCanvas, startPoint, endPoint, appState, shapeType, current_shading_type, primary_color, secondary_color);
                 break;
             case MOVE:
+                command = new MoveCommand(paintCanvas, startPoint, endPoint, appState);
                 break;
             case SELECT:
                 command = new SelectCommand(paintCanvas, startPoint, endPoint, appState);
-                try{
-                    command.run();
-                }catch(IOException ex){
-                    System.out.println("Something went wrong with your Select command");
-                }
                 break;
         }
+        try{
+            command.run();
+        }catch(IOException ex){
+            System.out.println("something went wrong");
+        }
 
-
-        //Graphics2D graphics2d = paintCanvas.getGraphics2D();
-        //graphics2d.setColor(Color.BLUE);
-        //graphics2d.drawRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
-        //graphics2d.setColor(Color.BLUE);
-        //graphics2d.fillRect(12, 13, 200, 400);
     }
 
     public void mousePressed(MouseEvent e){

@@ -18,15 +18,16 @@ public class DrawEllipseStrategy implements IDrawStrategy {
     Color secondary_color;
     ShapeShadingType current_shading_type;
 
-    DrawEllipseStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
+    DrawEllipseStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.appState = appState;
-        primary_color = appState.getActivePrimaryColor().getColor();
-        secondary_color = appState.getActiveSecondaryColor().getColor();
-        current_shading_type = appState.getActiveShapeShadingType();
+        this.current_shading_type = current_shading_type;
+        this.primary_color = primary_color;
+        this.secondary_color = secondary_color;
     }
+
     public void draw(){
         graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setColor(primary_color);

@@ -1,22 +1,24 @@
 package view.gui;
 
-import view.gui.Shape;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SelectedShapeList {
-    private static final Stack<Shape> selectedShapeList = new Stack<Shape>();
+    private static final List<Shape> selectedShapeList = new ArrayList<>();
 
     public static void add(Shape shape) {
-        selectedShapeList.push(shape);
+        selectedShapeList.add(shape);
     }
 
+    public static void remove(Shape shape){selectedShapeList.remove(shape); }
 
     public static void clear(){
         selectedShapeList.clear();
+        System.out.println("running Select Command clear");
     }
 
-    public static Stack<Shape> getSelectedShapeList(){
+    public static List<Shape> getSelectedShapeList(){
         return selectedShapeList;
     }
 

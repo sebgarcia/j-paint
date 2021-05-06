@@ -21,20 +21,20 @@ public class DrawTriangleStrategy implements IDrawStrategy {
     int[] xValues = new int[3];
     int[] yValues = new int[3];
 
-    DrawTriangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
+    DrawTriangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.appState = appState;
+        this.current_shading_type = current_shading_type;
+        this.primary_color = primary_color;
+        this.secondary_color = secondary_color;
         this.xValues[0] = startPoint.getX();
         this.xValues[1] = endPoint.getX();
         this.xValues[2] = startPoint.getX();
         this.yValues[0] = startPoint.getY();
         this.yValues[1] = endPoint.getY();
         this.yValues[2] = endPoint.getY();
-        primary_color = appState.getActivePrimaryColor().getColor();
-        secondary_color = appState.getActiveSecondaryColor().getColor();
-        current_shading_type = appState.getActiveShapeShadingType();
         polygon = new Polygon(xValues,yValues,3);
     }
 
