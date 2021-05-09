@@ -1,5 +1,6 @@
 package model.persistence;
 
+import model.interfaces.ICommand;
 import view.gui.CommandHistory;
 import model.ShapeColor;
 import model.ShapeShadingType;
@@ -8,7 +9,10 @@ import model.MouseMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
+import view.gui.CopyCommand;
 import view.interfaces.IUiModule;
+
+import java.io.IOException;
 
 public class ApplicationState implements IApplicationState {
     private final IUiModule uiModule;
@@ -59,6 +63,15 @@ public class ApplicationState implements IApplicationState {
     @Override
     public void setRedo(){
         CommandHistory.redo();
+    }
+
+    public void setCopy() {
+        try {
+            ICommand c = new CopyCommand();
+            c.run();
+        } catch (IOException e){
+            System.out.println("Copy failed");
+        }
     }
 
     @Override
