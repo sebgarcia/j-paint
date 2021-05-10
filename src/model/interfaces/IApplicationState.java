@@ -31,4 +31,6 @@ public interface IApplicationState {
     MouseMode getActiveMouseMode();
 
     void setCopy();
+
+    void setPaste();
 }

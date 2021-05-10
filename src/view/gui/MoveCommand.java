@@ -20,8 +20,6 @@ public class MoveCommand implements ICommand, IUndoable {
     List<Shape> movedShapeList = new ArrayList<Shape>();
     List<Shape> tempSelectedShapesList = new ArrayList<Shape>();
     ApplicationState appState;
-    //Shape newShape;
-    //Shape oldShape;
     int xOffset;
     int yOffset;
 

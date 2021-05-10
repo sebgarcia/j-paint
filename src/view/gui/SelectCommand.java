@@ -41,7 +41,6 @@ public class SelectCommand implements ICommand {
                 SelectedShapeList.add(s);
             }
         }
-        //System.out.println(SelectedShapeList.getSelectedShapeList());
     }
 
     public boolean collision_detector(Shape shape, MyPoint startPoint, MyPoint endPoint){

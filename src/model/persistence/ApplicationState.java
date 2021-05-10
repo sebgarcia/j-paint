@@ -10,6 +10,8 @@ import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
 import view.gui.CopyCommand;
+import view.gui.PasteCommand;
+import view.gui.SelectCommand;
 import view.interfaces.IUiModule;
 
 import java.io.IOException;
@@ -97,6 +99,15 @@ public class ApplicationState implements IApplicationState {
     @Override
     public MouseMode getActiveMouseMode() {
         return activeMouseMode;
+    }
+
+    public void setPaste(){
+        try {
+            ICommand c = new PasteCommand();
+            c.run();
+        } catch (IOException e){
+            System.out.println("Copy failed");
+        }
     }
 
     private void setDefaults() {

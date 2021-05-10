@@ -117,4 +117,8 @@ public class Shape implements ICommand, IUndoable, IShape {
     public ShapeShadingType getCurrent_shading_type() {
         return current_shading_type;
     }
+
+    public PaintCanvasBase getPaintCanvas(){
+        return paintCanvas;
+    }
 }
