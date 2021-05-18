@@ -1,7 +1,7 @@
 package model.persistence;
 
 import model.interfaces.ICommand;
-import view.gui.CommandHistory;
+import view.gui.*;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
@@ -9,9 +9,6 @@ import model.MouseMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
-import view.gui.CopyCommand;
-import view.gui.PasteCommand;
-import view.gui.SelectCommand;
 import view.interfaces.IUiModule;
 
 import java.io.IOException;
@@ -107,6 +104,16 @@ public class ApplicationState implements IApplicationState {
             c.run();
         } catch (IOException e){
             System.out.println("Copy failed");
+        }
+    }
+
+    @Override
+    public void setDelete() {
+        try {
+            ICommand c = new DeleteCommand();
+            c.run();
+        } catch (IOException e){
+            System.out.println("Delete command failed");
         }
     }
 

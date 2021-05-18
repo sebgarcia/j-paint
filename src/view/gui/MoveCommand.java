@@ -42,7 +42,7 @@ public class MoveCommand implements ICommand, IUndoable {
     public void undo() {
         for (Shape s: movedShapeList){
             //get rid of moved shapes
-            s.delete();
+            coverShape(s);
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
@@ -60,7 +60,7 @@ public class MoveCommand implements ICommand, IUndoable {
     @Override
     public void redo() {
         for (Shape s: oldShapeList){
-            s.delete();
+            coverShape(s);
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
@@ -74,6 +74,20 @@ public class MoveCommand implements ICommand, IUndoable {
             s.draw();
         }
 
+    }
+
+    public void coverShape(Shape oldShape){
+        Shape coverShape = new Shape
+                (paintCanvas,
+                        oldShape.getStartPoint(),
+                        oldShape.getEndPoint(),
+                        oldShape.getAppState(),
+                        oldShape.getShapeType(),
+                        oldShape.getCurrent_shading_type(),
+                        Color.WHITE,
+                        Color.WHITE);
+        coverShape.strategyDecider();
+        coverShape.draw();
     }
 
     public void moveSelectedShapes(){
@@ -97,7 +111,7 @@ public class MoveCommand implements ICommand, IUndoable {
                                 oldShape.getSecondary_color());
             movedShapeList.add(newShape);
             newShape.strategyDecider();
-            oldShape.delete();
+            coverShape(oldShape);
             ShapesList.remove(oldShape);
             ShapesList.add(newShape);
         }

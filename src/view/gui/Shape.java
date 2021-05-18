@@ -91,11 +91,26 @@ public class Shape implements ICommand, IUndoable, IShape {
 
 
     public void delete(){
+        //coverShape();
         ShapesList.remove(this);
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
         graphics2d.setStroke(new BasicStroke(15));
         graphics2d.drawRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
+    }
+
+    public void coverShape(){
+        Shape coverShape = new Shape
+                (paintCanvas,
+                        this.getStartPoint(),
+                        this.getEndPoint(),
+                        this.getAppState(),
+                        this.getShapeType(),
+                        this.getCurrent_shading_type(),
+                        Color.WHITE,
+                        Color.WHITE);
+        coverShape.strategyDecider();
+        coverShape.draw();
     }
 
     public ApplicationState getAppState() {
