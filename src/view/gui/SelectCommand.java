@@ -35,11 +35,18 @@ public class SelectCommand implements ICommand {
 
     public void run() throws IOException {
         SelectedShapeList.clear();
+        clearCanvas();
         tempShapesList = ShapesList.getShapesList();
         for(Shape s : tempShapesList){
+            s.draw();
             if (collision_detector(s,startPoint,endPoint)){
                 SelectedShapeList.add(s);
             }
+        }
+
+        for(Shape s: SelectedShapeList.getSelectedShapeList()){
+            IShape outline = new SelectedShapeOutline(s);
+            outline.draw();
         }
     }
 
@@ -54,5 +61,10 @@ public class SelectCommand implements ICommand {
             return true;
         }
         return false;
+    }
+
+    public void clearCanvas(){
+        graphics2d.setColor(Color.WHITE);
+        graphics2d.fillRect(0,0, paintCanvas.getWidth(), paintCanvas.getHeight());
     }
 }

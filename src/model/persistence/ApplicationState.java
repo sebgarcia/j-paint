@@ -10,6 +10,7 @@ import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
 import view.interfaces.IUiModule;
+import view.interfaces.PaintCanvasBase;
 
 import java.io.IOException;
 
@@ -22,6 +23,7 @@ public class ApplicationState implements IApplicationState {
     private ShapeColor activeSecondaryColor;
     private ShapeShadingType activeShapeShadingType;
     private MouseMode activeMouseMode;
+    private PaintCanvasBase paintCanvasBase;
 
     public ApplicationState(IUiModule uiModule) {
         this.uiModule = uiModule;
@@ -98,6 +100,12 @@ public class ApplicationState implements IApplicationState {
         return activeMouseMode;
     }
 
+    public void setPaintCanvasBase(PaintCanvasBase paintCanvasBase) {
+        this.paintCanvasBase = paintCanvasBase;
+    }
+
+    public PaintCanvasBase getPaintCanvasBase(){return paintCanvasBase;}
+
     public void setPaste(){
         try {
             ICommand c = new PasteCommand();
@@ -110,7 +118,7 @@ public class ApplicationState implements IApplicationState {
     @Override
     public void setDelete() {
         try {
-            ICommand c = new DeleteCommand();
+            ICommand c = new DeleteCommand(this.paintCanvasBase);
             c.run();
         } catch (IOException e){
             System.out.println("Delete command failed");

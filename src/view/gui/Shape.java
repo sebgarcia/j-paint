@@ -38,10 +38,10 @@ public class Shape implements ICommand, IUndoable, IShape {
         this.current_shading_type = current_shading_type;
         this.primary_color = primary_color;
         this.secondary_color = secondary_color;
+        this.strategyDecider();
     }
 
     public void run(){
-        this.strategyDecider();
         drawStrategy.draw();
         CommandHistory.add(this);
         ShapesList.add(this);
@@ -55,13 +55,13 @@ public class Shape implements ICommand, IUndoable, IShape {
     public void strategyDecider(){
         switch(shapeType){
             case RECTANGLE:
-                drawStrategy = new DrawRectangleStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color);
+                drawStrategy = new DrawRectangleStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color, false);
                 break;
             case ELLIPSE:
-                drawStrategy = new DrawEllipseStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color);
+                drawStrategy = new DrawEllipseStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color, false);
                 break;
             case TRIANGLE:
-                drawStrategy  = new DrawTriangleStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color);
+                drawStrategy  = new DrawTriangleStrategy(paintCanvas,startPoint,endPoint, appState, current_shading_type, primary_color, secondary_color, false);
                 break;
         }
     }
@@ -91,27 +91,14 @@ public class Shape implements ICommand, IUndoable, IShape {
 
 
     public void delete(){
-        //coverShape();
         ShapesList.remove(this);
+        SelectedShapeList.remove(this);
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
         graphics2d.setStroke(new BasicStroke(15));
         graphics2d.drawRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
     }
 
-    public void coverShape(){
-        Shape coverShape = new Shape
-                (paintCanvas,
-                        this.getStartPoint(),
-                        this.getEndPoint(),
-                        this.getAppState(),
-                        this.getShapeType(),
-                        this.getCurrent_shading_type(),
-                        Color.WHITE,
-                        Color.WHITE);
-        coverShape.strategyDecider();
-        coverShape.draw();
-    }
 
     public ApplicationState getAppState() {
         return appState;

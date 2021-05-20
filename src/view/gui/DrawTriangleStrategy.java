@@ -20,8 +20,10 @@ public class DrawTriangleStrategy implements IDrawStrategy {
     Polygon polygon;
     int[] xValues = new int[3];
     int[] yValues = new int[3];
+    Boolean isOutline;
 
-    DrawTriangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color){
+
+    DrawTriangleStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color, Boolean isOutline){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -36,12 +38,16 @@ public class DrawTriangleStrategy implements IDrawStrategy {
         this.yValues[1] = endPoint.getY();
         this.yValues[2] = endPoint.getY();
         polygon = new Polygon(xValues,yValues,3);
+        this.isOutline = isOutline;
     }
 
     public void draw(){
         graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setColor(primary_color);
         graphics2d.setStroke(new BasicStroke(5));
+        if (isOutline){
+            graphics2d.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+        }
         switch (current_shading_type){
             case OUTLINE:
                 graphics2d.drawPolygon(polygon);

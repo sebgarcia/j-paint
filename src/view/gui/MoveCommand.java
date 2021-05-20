@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
@@ -42,7 +43,7 @@ public class MoveCommand implements ICommand, IUndoable {
     public void undo() {
         for (Shape s: movedShapeList){
             //get rid of moved shapes
-            coverShape(s);
+            clearCanvas();
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
@@ -50,6 +51,8 @@ public class MoveCommand implements ICommand, IUndoable {
         for (Shape s: oldShapeList){
             ShapesList.add(s);
             SelectedShapeList.add(s);
+            SelectedShapeOutline border = new SelectedShapeOutline(s);
+            border.draw();
         }
 
         for (Shape s: ShapesList.getShapesList()){
@@ -60,7 +63,7 @@ public class MoveCommand implements ICommand, IUndoable {
     @Override
     public void redo() {
         for (Shape s: oldShapeList){
-            coverShape(s);
+            clearCanvas();
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
@@ -116,14 +119,22 @@ public class MoveCommand implements ICommand, IUndoable {
             ShapesList.add(newShape);
         }
 
+        SelectedShapeList.clear();
+        clearCanvas();
+
         for (Shape s : ShapesList.getShapesList()){
             s.draw();
         }
 
-        SelectedShapeList.clear();
         for (Shape movedShape: movedShapeList){
             SelectedShapeList.add(movedShape);
+            IShape border = new SelectedShapeOutline(movedShape);
+            border.draw();
         }
     }
 
+    public void clearCanvas(){
+        graphics2d.setColor(Color.WHITE);
+        graphics2d.fillRect(0,0, paintCanvas.getWidth(), paintCanvas.getHeight());
+    }
 }

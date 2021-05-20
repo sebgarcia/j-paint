@@ -17,8 +17,9 @@ public class DrawEllipseStrategy implements IDrawStrategy {
     Color primary_color;
     Color secondary_color;
     ShapeShadingType current_shading_type;
+    Boolean isOutline;
 
-    DrawEllipseStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color){
+    DrawEllipseStrategy(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState, ShapeShadingType current_shading_type, Color primary_color, Color secondary_color, Boolean isOutline){
         this.paintCanvas = paintCanvas;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -26,12 +27,16 @@ public class DrawEllipseStrategy implements IDrawStrategy {
         this.current_shading_type = current_shading_type;
         this.primary_color = primary_color;
         this.secondary_color = secondary_color;
+        this.isOutline = isOutline;
+        graphics2d = paintCanvas.getGraphics2D();
     }
 
     public void draw(){
-        graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setColor(primary_color);
         graphics2d.setStroke(new BasicStroke(5));
+        if (isOutline){
+            graphics2d.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+        }
         switch(current_shading_type){
             case OUTLINE:
                 graphics2d.drawOval(startPoint.x, startPoint.y, (endPoint.x-startPoint.x),(endPoint.y- startPoint.y));
@@ -45,6 +50,5 @@ public class DrawEllipseStrategy implements IDrawStrategy {
                 graphics2d.drawOval(startPoint.x, startPoint.y, (endPoint.x-startPoint.x),(endPoint.y- startPoint.y));
                 break;
         }
-        //graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
     }
 }

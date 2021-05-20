@@ -23,6 +23,7 @@ public class Main {
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
+        appState.setPaintCanvasBase(paintCanvas);
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
         MyMouseListener myMouseListener = new MyMouseListener(paintCanvas,appState);
