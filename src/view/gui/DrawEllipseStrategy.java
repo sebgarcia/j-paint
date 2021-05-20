@@ -35,9 +35,13 @@ public class DrawEllipseStrategy implements IDrawStrategy {
         graphics2d.setColor(primary_color);
         graphics2d.setStroke(new BasicStroke(5));
         if (isOutline){
+            //if isOutline flag is selected, then create the outline stroke.
+            // Dotted line formatting found in this stack overflow post:
+            // https://stackoverflow.com/questions/21989082/drawing-dashed-line-in-java/21989406
             graphics2d.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
         }
         switch(current_shading_type){
+            //otherwise, draw a regular shape
             case OUTLINE:
                 graphics2d.drawOval(startPoint.x, startPoint.y, (endPoint.x-startPoint.x),(endPoint.y- startPoint.y));
                 break;

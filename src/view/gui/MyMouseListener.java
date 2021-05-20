@@ -50,7 +50,6 @@ public class MyMouseListener extends MouseAdapter {
                         .setShapeType(shapeType)
                         .setShapeShadingType(current_shading_type)
                         .toShape();
-                //command = new Shape(paintCanvas, startPoint, endPoint, appState, shapeType, current_shading_type, primary_color, secondary_color);
                 break;
             case MOVE:
                 command = new MoveCommand(paintCanvas, startPoint, endPoint, appState);

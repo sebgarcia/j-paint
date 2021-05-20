@@ -50,7 +50,7 @@ public class DeleteCommand implements ICommand, IUndoable {
 
         clearCanvas();
         SelectedShapeList.clear();
-        
+
         for (Shape s : ShapesList.getShapesList()){
             s.draw();
         }
