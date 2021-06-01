@@ -17,9 +17,9 @@ public class MoveCommand implements ICommand, IUndoable {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<Shape> oldShapeList = new ArrayList<Shape>();
-    List<Shape> movedShapeList = new ArrayList<Shape>();
-    List<Shape> tempSelectedShapesList = new ArrayList<Shape>();
+    List<IShape> oldShapeList = new ArrayList<IShape>();
+    List<IShape> movedShapeList = new ArrayList<IShape>();
+    List<IShape> tempSelectedShapesList = new ArrayList<IShape>();
     ApplicationState appState;
     int xOffset;
     int yOffset;
@@ -41,65 +41,51 @@ public class MoveCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        for (Shape s: movedShapeList){
+        for (IShape s: movedShapeList){
             //get rid of moved shapes
             clearCanvas();
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
 
-        for (Shape s: oldShapeList){
+        for (IShape s: oldShapeList){
             ShapesList.add(s);
             SelectedShapeList.add(s);
             SelectedShapeOutline border = new SelectedShapeOutline(s);
             border.draw();
         }
 
-        for (Shape s: ShapesList.getShapesList()){
+        for (IShape s: ShapesList.getShapesList()){
             s.draw();
         }
     }
 
     @Override
     public void redo() {
-        for (Shape s: oldShapeList){
+        for (IShape s: oldShapeList){
             clearCanvas();
             ShapesList.remove(s);
             SelectedShapeList.remove(s);
         }
 
-        for (Shape s: movedShapeList){
+        for (IShape s: movedShapeList){
             ShapesList.add(s);
             SelectedShapeList.add(s);
         }
 
-        for (Shape s: ShapesList.getShapesList()){
+        for (IShape s: ShapesList.getShapesList()){
             s.draw();
         }
 
     }
 
-    public void coverShape(Shape oldShape){
-        Shape coverShape = new Shape
-                (paintCanvas,
-                        oldShape.getStartPoint(),
-                        oldShape.getEndPoint(),
-                        oldShape.getAppState(),
-                        oldShape.getShapeType(),
-                        oldShape.getCurrent_shading_type(),
-                        Color.WHITE,
-                        Color.WHITE);
-        coverShape.strategyDecider();
-        coverShape.draw();
-    }
-
     public void moveSelectedShapes(){
         tempSelectedShapesList = SelectedShapeList.getSelectedShapeList();
-        for (Shape oldShape: tempSelectedShapesList){
+        for (IShape oldShape: tempSelectedShapesList){
             oldShapeList.add(oldShape);
         }
 
-        for (Shape oldShape : oldShapeList){
+        for (IShape oldShape : oldShapeList){
             //create a list of new shapes with the edits using the old selected shapes as a starting point with the edit
             MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX() + xOffset, oldShape.getStartPoint().getY() + yOffset);
             MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX()+xOffset, oldShape.getEndPoint().y+yOffset);
@@ -114,7 +100,7 @@ public class MoveCommand implements ICommand, IUndoable {
                                 oldShape.getSecondary_color());
             movedShapeList.add(newShape);
             newShape.strategyDecider();
-            coverShape(oldShape);
+            clearCanvas();
             ShapesList.remove(oldShape);
             ShapesList.add(newShape);
         }
@@ -122,11 +108,11 @@ public class MoveCommand implements ICommand, IUndoable {
         SelectedShapeList.clear();
         clearCanvas();
 
-        for (Shape s : ShapesList.getShapesList()){
+        for (IShape s : ShapesList.getShapesList()){
             s.draw();
         }
 
-        for (Shape movedShape: movedShapeList){
+        for (IShape movedShape: movedShapeList){
             SelectedShapeList.add(movedShape);
             IShape border = new SelectedShapeOutline(movedShape);
             border.draw();
@@ -136,5 +122,24 @@ public class MoveCommand implements ICommand, IUndoable {
     public void clearCanvas(){
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(0,0, paintCanvas.getWidth(), paintCanvas.getHeight());
+    }
+
+    public void moveSingleShape(IShape oldShape){
+        MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX() + xOffset, oldShape.getStartPoint().getY() + yOffset);
+        MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX()+xOffset, oldShape.getEndPoint().y+yOffset);
+        Shape newShape = new Shape
+                (paintCanvas,
+                        newStartPoint,
+                        newEndPoint,
+                        oldShape.getAppState(),
+                        oldShape.getShapeType(),
+                        oldShape.getCurrent_shading_type(),
+                        oldShape.getPrimary_color(),
+                        oldShape.getSecondary_color());
+        movedShapeList.add(newShape);
+        newShape.strategyDecider();
+        clearCanvas();
+        ShapesList.remove(oldShape);
+        ShapesList.add(newShape);
     }
 }

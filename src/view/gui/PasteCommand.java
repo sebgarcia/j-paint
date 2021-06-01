@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import view.interfaces.PaintCanvasBase;
 
@@ -10,16 +11,15 @@ import java.util.List;
 
 public class PasteCommand implements ICommand, IUndoable {
 
-    List<Shape> pastedShapes = new ArrayList<>();
+    List<IShape> pastedShapes = new ArrayList<>();
 
     @Override
     public void run() throws IOException {
-        System.out.println("running paste command");
-        for (Shape s : Clipboard.getClipboard()){
+        for (IShape s : Clipboard.getClipboard()){
             PasteShape(s);
         }
 
-        for(Shape s : ShapesList.getShapesList()){
+        for(IShape s : ShapesList.getShapesList()){
             s.draw();
         }
         System.out.println(ShapesList.getShapesList());
@@ -29,41 +29,50 @@ public class PasteCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        for (Shape s : pastedShapes){
+        for (IShape s : pastedShapes){
             s.delete();
             ShapesList.remove(s);
         }
-        for(Shape s : ShapesList.getShapesList()){
+        for(IShape s : ShapesList.getShapesList()){
             s.draw();
         }
     }
 
     @Override
     public void redo() {
-        for (Shape s : Clipboard.getClipboard()){
+        for (IShape s : Clipboard.getClipboard()){
             PasteShape(s);
         }
 
-        for(Shape s : ShapesList.getShapesList()){
+        for(IShape s : ShapesList.getShapesList()){
             s.draw();
         }
     }
 
-    public void PasteShape(Shape oldShape){
+    public void PasteShape(IShape oldShape){
+
+        if (oldShape instanceof Group){
+            Group group = (Group) oldShape;
+            group.ShapeGroup.forEach(this::pasteSingleShape);
+        } else {
+            pasteSingleShape(oldShape);
+        }
+    }
+
+    private void pasteSingleShape(IShape oldShape) {
         MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX() + 100, oldShape.getStartPoint().getY() + 100);
-        MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX()+100, oldShape.getEndPoint().y+100);
+        MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX() + 100, oldShape.getEndPoint().y + 100);
         PaintCanvasBase paintCanvas = oldShape.getPaintCanvas();
-        Shape newShape;
+        IShape newShape;
         newShape = new Shape
-                                    (paintCanvas,
-                                    newStartPoint,
-                                    newEndPoint,
-                                    oldShape.getAppState(),
-                                    oldShape.getShapeType(),
-                                    oldShape.getCurrent_shading_type(),
-                                    oldShape.getPrimary_color(),
-                                    oldShape.getSecondary_color());
-        newShape.strategyDecider();
+                (paintCanvas,
+                        newStartPoint,
+                        newEndPoint,
+                        oldShape.getAppState(),
+                        oldShape.getShapeType(),
+                        oldShape.getCurrent_shading_type(),
+                        oldShape.getPrimary_color(),
+                        oldShape.getSecondary_color());
         ShapesList.add(newShape);
         pastedShapes.add(newShape);
     }

@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import view.interfaces.PaintCanvasBase;
 
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteCommand implements ICommand, IUndoable {
-    List<Shape> deletedShapesList = new ArrayList<Shape>();
-    List<Shape> tempSelectedShapesList = new ArrayList<Shape>();
+    List<IShape> deletedShapesList = new ArrayList<IShape>();
+    List<IShape> tempSelectedShapesList = new ArrayList<IShape>();
     PaintCanvasBase paintCanvasBase;
     Graphics2D graphics2D;
 
@@ -27,8 +28,9 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        for (Shape s: deletedShapesList){
+        for (IShape s: deletedShapesList){
             SelectedShapeList.add(s);
+            ShapesList.add(s);
             s.draw();
         }
     }
@@ -41,23 +43,20 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     public void coverShape(){
         tempSelectedShapesList = SelectedShapeList.getSelectedShapeList();
-        for (Shape oldShape : tempSelectedShapesList){
+        for (IShape oldShape : tempSelectedShapesList){
             deletedShapesList.add(oldShape);
         }
-        for (Shape oldShape : deletedShapesList){
+        for (IShape oldShape : deletedShapesList){
             ShapesList.remove(oldShape);
         }
 
         clearCanvas();
         SelectedShapeList.clear();
 
-        for (Shape s : ShapesList.getShapesList()){
+        for (IShape s : ShapesList.getShapesList()){
             s.draw();
         }
 
-
-        //MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX(), oldShape.getStartPoint().getY());
-        //MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX(), oldShape.getEndPoint().getY());
     }
     public void clearCanvas(){
         graphics2D = paintCanvasBase.getGraphics2D();

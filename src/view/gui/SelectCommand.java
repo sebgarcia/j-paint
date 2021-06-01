@@ -22,7 +22,7 @@ public class SelectCommand implements ICommand {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<Shape> tempShapesList = new ArrayList<Shape>();
+    List<IShape> tempShapesList = new ArrayList<IShape>();
     ApplicationState appState;
 
     public SelectCommand(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
@@ -37,20 +37,20 @@ public class SelectCommand implements ICommand {
         SelectedShapeList.clear();
         clearCanvas();
         tempShapesList = ShapesList.getShapesList();
-        for(Shape s : tempShapesList){
+        for(IShape s : tempShapesList){
             s.draw();
             if (collision_detector(s,startPoint,endPoint)){
                 SelectedShapeList.add(s);
             }
         }
 
-        for(Shape s: SelectedShapeList.getSelectedShapeList()){
+        for(IShape s: SelectedShapeList.getSelectedShapeList()){
             IShape outline = new SelectedShapeOutline(s);
             outline.draw();
         }
     }
 
-    public boolean collision_detector(Shape shape, MyPoint startPoint, MyPoint endPoint){
+    public boolean collision_detector(IShape shape, MyPoint startPoint, MyPoint endPoint){
         //collision algorithm found in this stack overflow page
         //https://stackoverflow.com/questions/31022269/collision-detection-between-two-rectangles-in-java
 

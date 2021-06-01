@@ -20,7 +20,7 @@ public class Shape implements ICommand, IUndoable, IShape {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<Shape> tempShapesList = new ArrayList<Shape>();
+    List<IShape> tempShapesList = new ArrayList<IShape>();
     IDrawStrategy drawStrategy;
     ApplicationState appState;
     ShapeType shapeType;
@@ -45,7 +45,6 @@ public class Shape implements ICommand, IUndoable, IShape {
         drawStrategy.draw();
         CommandHistory.add(this);
         ShapesList.add(this);
-
     }
 
     public void draw(){
@@ -71,7 +70,7 @@ public class Shape implements ICommand, IUndoable, IShape {
         //get the Shape List and re-draw all shapes, minus the most recent one
         this.delete();
         tempShapesList = ShapesList.getShapesList();
-        for (Shape s: tempShapesList){
+        for (IShape s: tempShapesList){
             s.draw();
         }
     }

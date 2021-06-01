@@ -125,6 +125,15 @@ public class ApplicationState implements IApplicationState {
         }
     }
 
+    public void setGroup(){
+        try{
+            ICommand c = new GroupCommand(paintCanvasBase);
+            c.run();
+        }catch(IOException e){
+            System.out.println("GroupCommandFail");
+        }
+    }
+
     private void setDefaults() {
         activeShapeType = ShapeType.RECTANGLE;
         activePrimaryColor = ShapeColor.BLUE;

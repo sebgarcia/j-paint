@@ -1,6 +1,7 @@
 package view.gui;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ public class CopyCommand implements ICommand {
     @Override
     public void run() throws IOException {
         Clipboard.clear();
-        for (Shape s : SelectedShapeList.getSelectedShapeList()){
+        for (IShape s : SelectedShapeList.getSelectedShapeList()){
             Clipboard.add(s);
         }
         System.out.println(Clipboard.getClipboard());

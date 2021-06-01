@@ -9,17 +9,17 @@ import model.interfaces.IShape;
 import view.gui.Shape;
 
 public class ShapesList {
-    private static final List<Shape> shapesList = new ArrayList<>();
+    private static final List<IShape> shapesList = new ArrayList<>();
 
-    public static void add(Shape shape) {
+    public static void add(IShape shape) {
         shapesList.add(shape);
     }
 
-    public  static void remove(Shape s){
+    public  static void remove(IShape s){
         shapesList.remove(s);
     }
 
-    public static List<Shape> getShapesList(){
+    public static List<IShape> getShapesList(){
         return shapesList;
     }
 

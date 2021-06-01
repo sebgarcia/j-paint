@@ -8,8 +8,6 @@ import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static model.ShapeShadingType.OUTLINE;
 
@@ -18,7 +16,6 @@ public class SelectedShapeOutline implements IShape {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<Shape> tempShapesList = new ArrayList<Shape>();
     IDrawStrategy drawStrategy;
     ApplicationState appState;
     ShapeType shapeType;
@@ -28,7 +25,7 @@ public class SelectedShapeOutline implements IShape {
 
     private IShape baseShape;
 
-    public SelectedShapeOutline(Shape s){
+    public SelectedShapeOutline(IShape s){
         this.baseShape = s;
         this.startPoint = new MyPoint(s.getStartPoint().getX() -5  ,s.getStartPoint().getY() - 5);
         this.endPoint = new MyPoint(s.getEndPoint().getX()+4, s.getEndPoint().getY() + 5);
@@ -51,6 +48,61 @@ public class SelectedShapeOutline implements IShape {
     public void run() {
         this.draw();
         baseShape.draw();
+    }
+
+    @Override
+    public MyPoint getEndPoint() {
+        return null;
+    }
+
+    @Override
+    public MyPoint getStartPoint() {
+        return null;
+    }
+
+    @Override
+    public ApplicationState getAppState() {
+        return null;
+    }
+
+    @Override
+    public ShapeType getShapeType() {
+        return null;
+    }
+
+    @Override
+    public ShapeShadingType getCurrent_shading_type() {
+        return null;
+    }
+
+    @Override
+    public Color getPrimary_color() {
+        return null;
+    }
+
+    @Override
+    public Color getSecondary_color() {
+        return null;
+    }
+
+    @Override
+    public PaintCanvasBase getPaintCanvas() {
+        return null;
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void undo() {
+
+    }
+
+    @Override
+    public void redo() {
+
     }
 
     public void strategyDecider(){
