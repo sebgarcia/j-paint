@@ -22,10 +22,23 @@ public class Group implements ICommand, IShape, IUndoable {
     public PaintCanvasBase paintCanvasBase;
     public Graphics2D graphics2D;
 
-    Group(PaintCanvasBase paintCanvasBase){
+    Group(PaintCanvasBase paintCanvasBase, List<IShape> Shapes){
         this.paintCanvasBase = paintCanvasBase;
         this.graphics2D = paintCanvasBase.getGraphics2D();
-    }
+
+        if (Shapes.get(0) instanceof NullShape){
+            for (IShape s: SelectedShapeList.getSelectedShapeList()){
+                ShapeGroup.add(s);
+                ShapesList.remove(s);
+                }
+            }
+            else{
+                for(IShape s: Shapes){
+                    ShapeGroup.add(s);
+                }
+            }
+        }
+
 
     @Override
     public void draw() {
@@ -36,10 +49,7 @@ public class Group implements ICommand, IShape, IUndoable {
 
     @Override
     public void run() throws IOException {
-        for (IShape s: SelectedShapeList.getSelectedShapeList()){
-            ShapeGroup.add(s);
-            ShapesList.remove(s);
-        }
+
         coordinateDecider();
         SelectedShapeList.clear();
         SelectedShapeList.add(this);

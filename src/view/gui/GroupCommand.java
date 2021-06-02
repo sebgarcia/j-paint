@@ -7,18 +7,25 @@ import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.interfaces.IShape;
+
 
 public class GroupCommand implements ICommand, IUndoable {
 
     public PaintCanvasBase pcb;
-    IShape group;
+    public IShape group;
+    List<IShape> nullShapes = new ArrayList<>();
 
     public GroupCommand(PaintCanvasBase pcb){
         this.pcb = pcb;
+        nullShapes.add(new NullShape());
     }
     @Override
     public void run() throws IOException {
-        this.group = new Group(pcb);
+        this.group = new Group(pcb,nullShapes);
         group.run();
         CommandHistory.add(this);
     }

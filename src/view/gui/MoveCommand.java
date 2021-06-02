@@ -20,9 +20,11 @@ public class MoveCommand implements ICommand, IUndoable {
     List<IShape> oldShapeList = new ArrayList<IShape>();
     List<IShape> movedShapeList = new ArrayList<IShape>();
     List<IShape> tempSelectedShapesList = new ArrayList<IShape>();
+    List<IShape> tempMovedShapesList = new ArrayList<>();
     ApplicationState appState;
     int xOffset;
     int yOffset;
+    private Clipboard ShapeList;
 
     public MoveCommand(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;
@@ -79,30 +81,30 @@ public class MoveCommand implements ICommand, IUndoable {
 
     }
 
-    public void moveSelectedShapes(){
+    public void moveSelectedShapes() throws IOException {
         tempSelectedShapesList = SelectedShapeList.getSelectedShapeList();
         for (IShape oldShape: tempSelectedShapesList){
             oldShapeList.add(oldShape);
         }
 
-        for (IShape oldShape : oldShapeList){
-            //create a list of new shapes with the edits using the old selected shapes as a starting point with the edit
-            MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX() + xOffset, oldShape.getStartPoint().getY() + yOffset);
-            MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX()+xOffset, oldShape.getEndPoint().y+yOffset);
-            Shape newShape = new Shape
-                                (paintCanvas,
-                                newStartPoint,
-                                newEndPoint,
-                                oldShape.getAppState(),
-                                oldShape.getShapeType(),
-                                oldShape.getCurrent_shading_type(),
-                                oldShape.getPrimary_color(),
-                                oldShape.getSecondary_color());
-            movedShapeList.add(newShape);
-            newShape.strategyDecider();
-            clearCanvas();
+        for (IShape oldShape : oldShapeList) {
+            if (oldShape instanceof Group) {
+                Group group = (Group) oldShape;
+                for(IShape s: group.ShapeGroup){
+                    tempMovedShapesList.add(moveSingleShape(s));
+                }
+
+                IShape newGroup = new Group(paintCanvas, tempMovedShapesList);
+                newGroup.run();
+                movedShapeList.add(newGroup);
+            } else {
+                IShape movedShape = moveSingleShape(oldShape);
+                SelectedShapeList.add(movedShape);
+                ShapesList.add(movedShape);
+                movedShapeList.add(movedShape);
+                }
             ShapesList.remove(oldShape);
-            ShapesList.add(newShape);
+            SelectedShapeList.remove(oldShape);
         }
 
         SelectedShapeList.clear();
@@ -114,8 +116,11 @@ public class MoveCommand implements ICommand, IUndoable {
 
         for (IShape movedShape: movedShapeList){
             SelectedShapeList.add(movedShape);
-            IShape border = new SelectedShapeOutline(movedShape);
-            border.draw();
+
+
+                IShape border = new SelectedShapeOutline(movedShape);
+                border.draw();
+
         }
     }
 
@@ -124,7 +129,7 @@ public class MoveCommand implements ICommand, IUndoable {
         graphics2d.fillRect(0,0, paintCanvas.getWidth(), paintCanvas.getHeight());
     }
 
-    public void moveSingleShape(IShape oldShape){
+    public IShape moveSingleShape(IShape oldShape){
         MyPoint newStartPoint = new MyPoint(oldShape.getStartPoint().getX() + xOffset, oldShape.getStartPoint().getY() + yOffset);
         MyPoint newEndPoint = new MyPoint(oldShape.getEndPoint().getX()+xOffset, oldShape.getEndPoint().y+yOffset);
         Shape newShape = new Shape
@@ -136,10 +141,8 @@ public class MoveCommand implements ICommand, IUndoable {
                         oldShape.getCurrent_shading_type(),
                         oldShape.getPrimary_color(),
                         oldShape.getSecondary_color());
-        movedShapeList.add(newShape);
-        newShape.strategyDecider();
         clearCanvas();
         ShapesList.remove(oldShape);
-        ShapesList.add(newShape);
+        return newShape;
     }
 }
