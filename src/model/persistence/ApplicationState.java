@@ -130,7 +130,17 @@ public class ApplicationState implements IApplicationState {
             ICommand c = new GroupCommand(paintCanvasBase);
             c.run();
         }catch(IOException e){
-            System.out.println("GroupCommandFail");
+            System.out.println("Group Command Fail");
+        }
+    }
+
+    @Override
+    public void setUngroup() {
+        try{
+            ICommand c = new UngroupCommand(paintCanvasBase);
+            c.run();
+        }catch (IOException e){
+            System.out.println("Ungroup command failed");
         }
     }
 

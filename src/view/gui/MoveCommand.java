@@ -44,6 +44,7 @@ public class MoveCommand implements ICommand, IUndoable {
     @Override
     public void undo() {
         for (IShape s: movedShapeList){
+            System.out.println(ShapesList.getShapesList());
             //get rid of moved shapes
             clearCanvas();
             ShapesList.remove(s);
@@ -82,6 +83,7 @@ public class MoveCommand implements ICommand, IUndoable {
     }
 
     public void moveSelectedShapes() throws IOException {
+        System.out.println(ShapesList.getShapesList());
         tempSelectedShapesList = SelectedShapeList.getSelectedShapeList();
         for (IShape oldShape: tempSelectedShapesList){
             oldShapeList.add(oldShape);
@@ -116,10 +118,8 @@ public class MoveCommand implements ICommand, IUndoable {
 
         for (IShape movedShape: movedShapeList){
             SelectedShapeList.add(movedShape);
-
-
-                IShape border = new SelectedShapeOutline(movedShape);
-                border.draw();
+            IShape border = new SelectedShapeOutline(movedShape);
+            border.draw();
 
         }
     }

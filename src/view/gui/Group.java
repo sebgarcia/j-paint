@@ -56,6 +56,7 @@ public class Group implements ICommand, IShape, IUndoable {
         ShapesList.add(this);
         clearCanvas();
         redrawSelectedShapes();
+
     }
 
     @Override
@@ -142,6 +143,7 @@ public class Group implements ICommand, IShape, IUndoable {
     @Override
     public void undo() {
         SelectedShapeList.remove(this);
+        ShapesList.remove(this);
         ShapeGroup.forEach(s->{
             ShapesList.add(s);
             SelectedShapeList.add(s);
