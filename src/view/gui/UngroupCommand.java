@@ -25,6 +25,7 @@ public class UngroupCommand implements ICommand, IUndoable {
     @Override
     public void run() throws IOException {
         ungroupShapes();
+        CommandHistory.add(this);
     }
 
     public void ungroupShapes(){
