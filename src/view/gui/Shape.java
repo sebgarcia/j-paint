@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.awt.*;
+import java.lang.*;
 
 public class Shape implements ICommand, IUndoable, IShape {
 
@@ -38,6 +39,7 @@ public class Shape implements ICommand, IUndoable, IShape {
         this.current_shading_type = current_shading_type;
         this.primary_color = primary_color;
         this.secondary_color = secondary_color;
+        startEndPointAdjustor();
         this.strategyDecider();
     }
 
@@ -96,6 +98,16 @@ public class Shape implements ICommand, IUndoable, IShape {
         graphics2d.fillRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
         graphics2d.setStroke(new BasicStroke(15));
         graphics2d.drawRect(startPoint.x, startPoint.y, (endPoint.x-startPoint.x), (endPoint.y- startPoint.y));
+    }
+
+    public void startEndPointAdjustor(){
+        int adjusted_start_x = Math.min(startPoint.getX(),endPoint.getX());
+        int adjusted_start_y = Math.min(startPoint.getY(),endPoint.getY());
+        int adjusted_end_x = Math.max(startPoint.getX(),endPoint.getX());
+        int adjusted_end_y = Math.max(startPoint.getY(),endPoint.getY());
+
+        this.startPoint = new MyPoint(adjusted_start_x,adjusted_start_y);
+        this.endPoint = new MyPoint(adjusted_end_x,adjusted_end_y);
     }
 
 

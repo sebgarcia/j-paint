@@ -31,6 +31,7 @@ public class SelectCommand implements ICommand {
         this.endPoint = endPoint;
         this.graphics2d = paintCanvas.getGraphics2D();
         this.appState = appState;
+        startEndPointAdjustor();
     }
 
     public void run() throws IOException {
@@ -66,5 +67,15 @@ public class SelectCommand implements ICommand {
     public void clearCanvas(){
         graphics2d.setColor(Color.WHITE);
         graphics2d.fillRect(0,0, paintCanvas.getWidth(), paintCanvas.getHeight());
+    }
+
+    public void startEndPointAdjustor(){
+        int adjusted_start_x = Math.min(startPoint.getX(),endPoint.getX());
+        int adjusted_start_y = Math.min(startPoint.getY(),endPoint.getY());
+        int adjusted_end_x = Math.max(startPoint.getX(),endPoint.getX());
+        int adjusted_end_y = Math.max(startPoint.getY(),endPoint.getY());
+
+        this.startPoint = new MyPoint(adjusted_start_x,adjusted_start_y);
+        this.endPoint = new MyPoint(adjusted_end_x,adjusted_end_y);
     }
 }
