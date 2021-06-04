@@ -1,17 +1,11 @@
 package view.gui;
 
-import model.ShapeType;
 import model.interfaces.ICommand;
-import model.interfaces.IDrawStrategy;
 import model.interfaces.IShape;
-import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
-
-import java.sql.Array;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.awt.*;
 
 import java.io.IOException;
@@ -22,7 +16,7 @@ public class SelectCommand implements ICommand {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<IShape> tempShapesList = new ArrayList<IShape>();
+    List<IShape> tempShapesList = new ArrayList<>();
     ApplicationState appState;
 
     public SelectCommand(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){

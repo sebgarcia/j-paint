@@ -2,7 +2,6 @@ package view.gui;
 
 import java.util.Stack;
 
-import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
 
 public class CommandHistory {
@@ -12,7 +11,7 @@ public class CommandHistory {
 	public static void add(IUndoable cmd) {
 		undoStack.push(cmd);
 		redoStack.clear();
-		//System.out.println(undoStack);
+
 	}
 	
 	public static boolean undo() {
@@ -21,8 +20,6 @@ public class CommandHistory {
 			IUndoable c = undoStack.pop();
 			redoStack.push(c);
 			c.undo();
-			//System.out.println("undoStack");
-			//System.out.println(undoStack);
 		}
 		return result;
 	}
@@ -37,7 +34,4 @@ public class CommandHistory {
 		return result;
 	}
 
-	public static Stack<IUndoable> getUndoStack(){
-		return undoStack;
-	}
 }

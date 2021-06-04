@@ -17,14 +17,14 @@ public class MoveCommand implements ICommand, IUndoable {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<IShape> oldShapeList = new ArrayList<IShape>();
-    List<IShape> movedShapeList = new ArrayList<IShape>();
-    List<IShape> tempSelectedShapesList = new ArrayList<IShape>();
+    List<IShape> oldShapeList = new ArrayList<>();
+    List<IShape> movedShapeList = new ArrayList<>();
+    List<IShape> tempSelectedShapesList = new ArrayList<>();
     List<IShape> tempMovedShapesList = new ArrayList<>();
     ApplicationState appState;
     int xOffset;
     int yOffset;
-    private Clipboard ShapeList;
+
 
     public MoveCommand(PaintCanvasBase paintCanvas, MyPoint startPoint, MyPoint endPoint, ApplicationState appState){
         this.paintCanvas = paintCanvas;

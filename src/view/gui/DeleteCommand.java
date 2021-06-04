@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteCommand implements ICommand, IUndoable {
-    List<IShape> deletedShapesList = new ArrayList<IShape>();
-    List<IShape> tempSelectedShapesList = new ArrayList<IShape>();
+    List<IShape> deletedShapesList = new ArrayList<>();
+    List<IShape> tempSelectedShapesList = new ArrayList<>();
     PaintCanvasBase paintCanvasBase;
     Graphics2D graphics2D;
 

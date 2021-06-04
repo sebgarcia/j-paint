@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.interfaces.IShape;
-
 
 public class GroupCommand implements ICommand, IUndoable {
 

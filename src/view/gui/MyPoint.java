@@ -1,5 +1,4 @@
 package view.gui;
-import java.util.Arrays;
 
 public class MyPoint {
     int x;

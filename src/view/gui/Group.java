@@ -70,10 +70,10 @@ public class Group implements ICommand, IShape, IUndoable {
     }
 
     public void coordinateDecider(){
-        List<Integer> startXList = new ArrayList<Integer>();
-        List<Integer> startYList = new ArrayList<Integer>();
-        List<Integer> endXList = new ArrayList<Integer>();
-        List<Integer> endYList = new ArrayList<Integer>();
+        List<Integer> startXList = new ArrayList<>();
+        List<Integer> startYList = new ArrayList<>();
+        List<Integer> endXList = new ArrayList<>();
+        List<Integer> endYList = new ArrayList<>();
 
         ShapeGroup.forEach(s -> {
             startXList.add(s.getStartPoint().getX());

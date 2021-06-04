@@ -1,6 +1,5 @@
 package view.gui;
 
-import model.ShapeColor;
 import model.ShapeShadingType;
 import model.interfaces.IDrawStrategy;
 import model.persistence.ApplicationState;

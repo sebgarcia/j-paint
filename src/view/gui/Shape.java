@@ -11,7 +11,7 @@ import view.interfaces.PaintCanvasBase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+
 import java.awt.*;
 import java.lang.*;
 
@@ -21,7 +21,7 @@ public class Shape implements ICommand, IUndoable, IShape {
     MyPoint startPoint;
     MyPoint endPoint;
     Graphics2D graphics2d;
-    List<IShape> tempShapesList = new ArrayList<IShape>();
+    List<IShape> tempShapesList = new ArrayList<>();
     IDrawStrategy drawStrategy;
     ApplicationState appState;
     ShapeType shapeType;

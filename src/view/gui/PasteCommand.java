@@ -22,7 +22,6 @@ public class PasteCommand implements ICommand, IUndoable {
         for(IShape s : ShapesList.getShapesList()){
             s.draw();
         }
-        System.out.println(ShapesList.getShapesList());
         CommandHistory.add(this);
     }
 

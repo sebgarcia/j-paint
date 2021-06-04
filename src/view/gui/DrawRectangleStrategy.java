@@ -1,8 +1,6 @@
 package view.gui;
 
-import model.ShapeColor;
 import model.ShapeShadingType;
-import model.ShapeType;
 import model.interfaces.IDrawStrategy;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
